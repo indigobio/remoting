@@ -13,6 +13,18 @@ It includes: TCP-based communication protocols, data serialization, Java classlo
 
 The library is reusable outside Jenkins.
 
+### Building
+
+Must be built with Java 8 SDK if it's going to run on Java 8 JRE due to covariant return type problems.
+If building on Ubuntu, make sure `JAVA_HOME` isn't overriding the java version selected with Ubuntu's
+`update-alternatives`.
+
+```
+mvn clean package -DskipTests
+cp target/remoting-4.5.jar agent.jar
+```
+
+
 ### Downloads
 
 Jenkins Remoting libraries are supplied as a part of the Jenkins distributions,

@@ -134,6 +134,9 @@ public class Launcher {
             "Connection parameters are obtained by parsing the JNLP file.")
     public URL agentJnlpURL = null;
 
+    @Option(name="-jenkinsUrl",usage="override Jenkins URL sent from master")
+    public URL jenkinsUrl = null;
+
     @Option(name="-jnlpCredentials",metaVar="USER:PASSWORD",usage="HTTP BASIC AUTH header to pass in for making HTTP requests.")
     public String agentJnlpCredentials = null;
 
@@ -384,6 +387,11 @@ public class Launcher {
                 jnlpArgs.add("-disableHttpsCertValidation");
             }
             try {
+                if (jenkinsUrl != null) {
+                    int i = jnlpArgs.indexOf("-url");
+                    if (i != -1)
+                      jnlpArgs.set(i+1, jenkinsUrl.toString());
+                }
                 hudson.remoting.jnlp.Main._main(jnlpArgs.toArray(new String[jnlpArgs.size()]));
             } catch (CmdLineException e) {
                 System.err.println("JNLP file "+ agentJnlpURL +" has invalid arguments: "+jnlpArgs);
